@@ -19,18 +19,11 @@ node {
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
-            echo "${toolbelt}"
-            echo "${CONNECTED_APP_CONSUMER_KEY}"
-            echo "${HUB_ORG}"
-            echo "hub key is ${HUB_KEY}"
-            echo "${JWT_KEY_CRED_ID}"
-            bat 'dir'
-            bat 'sfdx'
     }
 
     stage('Create Scratch Org') {
 
-        rc = sh returnStatus: true, script: "${toolbelt} force:org:authorize -i ${CONNECTED_APP_CONSUMER_KEY} -u ${HUB_ORG} -f ${HUB_KEY} -y debug"
+        rc = bat 'sfdx force:org:authorize -i ${CONNECTED_APP_CONSUMER_KEY} -u ${HUB_ORG} -f ${HUB_KEY} -y debug'
         if (rc != 0) { error 'hub org authorization failed' }
 
         // need to pull out assigned username 
