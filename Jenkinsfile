@@ -13,6 +13,11 @@ node {
     def HUB_KEY=env.HUB_KEY_FILE_PATH
   
     def toolbelt = tool 'toolbelt'
+    
+    echo "${toolbelt}"
+    echo "${CONNECTED_APP_CONSUMER_KEY}"
+    echo "${HUB_ORG}"
+    echo "${HUB_KEY}"
 
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
@@ -25,7 +30,7 @@ node {
         if (rc != 0) { error 'hub org authorization failed' }
 
         // need to pull out assigned username 
-        rmsg = sh returnStdout: true, script: "${toolbelt}/sfdx force:org:create -f config/workspace-scratch-def.json -j -t test -y debug"
+        rmsg = sh returnStdout: true, script: "${toolbelt}/sfdx force:org:create -f config/project-scratch-def.json -j -t test -y debug"
         printf rmsg
         def jsonSlurper = new JsonSlurperClassic()
         def robj = jsonSlurper.parseText(rmsg)
