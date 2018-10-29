@@ -10,7 +10,7 @@ node {
     def SFDC_HOST = env.SFDC_HOST_DH
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
-    def HUB_KEY="C:\Users\abhimanyu.gupta\Documents\server.key"
+    def HUB_KEY="C:/Users/abhimanyu.gupta/Documents/server.key"
   
     def toolbelt = tool 'toolbelt'
     
@@ -31,7 +31,7 @@ node {
         if (rc != 0) { error 'hub org authorization failed' }
 
         // need to pull out assigned username 
-        rmsg = sh returnStdout: true, script: "${toolbelt}/sfdx force:org:create -f config/project-scratch-def.json -j -t test -y debug"
+        rmsg = sh returnStdout: true, script: "${toolbelt} force:org:create -f config/project-scratch-def.json -j -t test -y debug"
         printf rmsg
         def jsonSlurper = new JsonSlurperClassic()
         def robj = jsonSlurper.parseText(rmsg)
