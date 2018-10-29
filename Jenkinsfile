@@ -23,6 +23,7 @@ node {
             echo "${CONNECTED_APP_CONSUMER_KEY}"
             echo "${HUB_ORG}"
             echo "hub key is ${HUB_KEY}"
+            echo "${JWT_KEY_CRED_ID}"
     }
 
     stage('Create Scratch Org') {
