@@ -22,8 +22,9 @@ node {
     }
 
     stage('Create Scratch Org') {
-
-        rc = bat 'sfdx force:org:authorize -i ${CONNECTED_APP_CONSUMER_KEY} -u ${HUB_ORG} -f ${HUB_KEY} -y debug'
+        
+        
+        rc = bat 'sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}'
         if (rc != 0) { error 'hub org authorization failed' }
 
         // need to pull out assigned username 
