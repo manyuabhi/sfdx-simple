@@ -18,6 +18,7 @@ node {
 
 
         stage('Push To Test Org') {
+            bat 'sfdx force:config:set defaultusername=${SFDC_USERNAME}'
             rc = bat 'sfdx force:source:push --targetusername ${SFDC_USERNAME}'
             if (rc != 0) {
                 error 'push failed'
