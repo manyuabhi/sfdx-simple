@@ -21,7 +21,7 @@ node {
 
     stage('Create Scratch Org') {
 
-        rc = sh returnStatus: true, script: "${toolbelt}/sfdx force:org:authorize -i ${CONNECTED_APP_CONSUMER_KEY} -u ${HUB_ORG} -f ${HUB_KEY} -y debug"
+        rc = sh returnStatus: true, script: "${toolbelt}\sfdx.cmd force:org:authorize -i ${CONNECTED_APP_CONSUMER_KEY} -u ${HUB_ORG} -f ${HUB_KEY} -y debug"
         if (rc != 0) { error 'hub org authorization failed' }
 
         // need to pull out assigned username 
