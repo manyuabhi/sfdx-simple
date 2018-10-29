@@ -14,14 +14,15 @@ node {
   
     def toolbelt = tool 'toolbelt'
     
-    echo "${toolbelt}"
-    echo "${CONNECTED_APP_CONSUMER_KEY}"
-    echo "${HUB_ORG}"
-    echo "${HUB_KEY}"
+
 
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
+            echo "${toolbelt}"
+            echo "${CONNECTED_APP_CONSUMER_KEY}"
+            echo "${HUB_ORG}"
+            echo "${HUB_KEY}"
     }
 
     stage('Create Scratch Org') {
