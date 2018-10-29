@@ -22,7 +22,7 @@ node {
      stage('Create Scratch Org') {
 
             rc = bat 'sfdx force:auth:jwt:grant --clientid 3MVG9YDQS5WtC11oFIMX1lJLuBxuBK.li4OED4JOyldL5T8M8zx8bayYiM8G2kUnVXj6Q39r4zZB1O9NNJlCn --username 18.abhimanyu@gmail.com --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org'
-            rmsg = bat 'force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername'
+            rmsg = bat 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername'
             echo "$rc"
             echo "$rmsg"
             
