@@ -24,8 +24,8 @@ node {
             echo "${HUB_ORG}"
             echo "hub key is ${HUB_KEY}"
             echo "${JWT_KEY_CRED_ID}"
-            sh ('ls -ltr')
-            sh ('sfdx')
+            bat 'dir'
+            bat 'sfdx'
     }
 
     stage('Create Scratch Org') {
