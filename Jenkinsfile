@@ -18,12 +18,11 @@ node {
         checkout scm
     }
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
-        stage('Create Scratch Org') {
+   
+     stage('Create Scratch Org') {
 
             rc = bat 'sfdx force:auth:jwt:grant --clientid 3MVG9YDQS5WtC11oFIMX1lJLuBxuBK.li4OED4JOyldL5T8M8zx8bayYiM8G2kUnVXj6Q39r4zZB1O9NNJlCn --username 18.abhimanyu@gmail.com --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername -a my-devhub-org --instanceurl https://fighter-falcon-400597.lightning.force.com'
             if (rc != 0) { error 'hub org authorization failed' }
         }
         
     }
-	}
