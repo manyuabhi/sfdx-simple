@@ -10,7 +10,7 @@ node {
     def SFDC_HOST = env.SFDC_HOST_DH
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
-    def HUB_KEY="C:/Users/abhimanyu.gupta/Documents/server.key"
+    def HUB_KEY=env.HUB_KEY_FILE_PATH
   
     def toolbelt = tool 'toolbelt'
     
@@ -22,7 +22,7 @@ node {
             echo "${toolbelt}"
             echo "${CONNECTED_APP_CONSUMER_KEY}"
             echo "${HUB_ORG}"
-            echo "${HUB_KEY}"
+            echo "hub key is ${HUB_KEY}"
     }
 
     stage('Create Scratch Org') {
