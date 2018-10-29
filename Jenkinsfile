@@ -19,7 +19,7 @@ node {
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
         stage('Create Scratch Org') {
 
-            rc = bat 'sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername --instanceurl https://login.salesforce.com'
+            rc = bat 'sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername --instanceurl https://fighter-falcon-400597.lightning.force.com/'
             if (rc != 0) { error 'hub org authorization failed' }
 
             // need to pull out assigned username
