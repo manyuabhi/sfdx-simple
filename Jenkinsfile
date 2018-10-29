@@ -18,14 +18,22 @@ node {
         checkout scm
     }
 
-   
-     stage('Create Scratch Org') {
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
+        stage('Create Scratch Org') {
 
-            rc = bat 'sfdx force:auth:jwt:grant --clientid 3MVG9YDQS5WtC11oFIMX1lJLuBxuBK.li4OED4JOyldL5T8M8zx8bayYiM8G2kUnVXj6Q39r4zZB1O9NNJlCn --username 18.abhimanyu@gmail.com --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org'
-            rmsg = bat 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername'
-            echo "$rc"
-            echo "$rmsg"
-            
+            rc = bat 'sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}'
+            if (rc != 0) { error 'hub org authorization failed' }
+
+            // need to pull out assigned username
+            rmsg = sh returnStdout: true, script: "${toolbelt}/sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername"
+            printf rmsg
+            def jsonSlurper = new JsonSlurperClassic()
+            def robj = jsonSlurper.parseText(rmsg)
+            if (robj.status != 0) { error 'org creation failed: ' + robj.message }
+            SFDC_USERNAME=robj.result.username
+            robj = null
+
         }
         
     }
+	}
