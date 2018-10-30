@@ -47,7 +47,7 @@ node {
 	      stage('Run Apex Test') {
             bat 'mkdir tests'
             timeout(time: 120, unit: 'SECONDS') {
-                rc = bat (returnStatus: true, script: 'sfdx force:apex:test:run --testlevel RunLocalTests --outputdir tests--resultformat tap --targetusername test-emoazgqlq2wi@example.com')
+                rc = bat (returnStatus: true, script: 'sfdx force:apex:test:run --testlevel RunLocalTests --outputdir tests --resultformat tap --targetusername test-emoazgqlq2wi@example.com')
                 if (rc != 0) {
                     error 'apex test run failed'
                 }
