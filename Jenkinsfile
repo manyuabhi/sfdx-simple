@@ -45,7 +45,7 @@ node {
         }
 	
 	      stage('Run Apex Test') {
-            bat 'if not exists "tests" mkdir tests'
+            bat 'mkdir tests'
             timeout(time: 120, unit: 'SECONDS') {
                 rc = bat (returnStatus: true, script: 'sfdx force:apex:test:run --testlevel RunLocalTests --outputdir tests--resultformat tap --targetusername test-emoazgqlq2wi@example.com')
                 if (rc != 0) {
