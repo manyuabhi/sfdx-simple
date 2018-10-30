@@ -33,7 +33,7 @@ node {
         }
 	
 	stage('Push To Test Org') {
-            rc = bat (returnStatus: true, script: 'sfdx force:source:push --targetusername ${SFDC_USERNAME}')
+            rc = bat (returnStatus: true, script: 'sfdx force:source:push --targetusername %SFDC_USERNAME%')
             if (rc != 0) {
                 error 'push failed'
             }
