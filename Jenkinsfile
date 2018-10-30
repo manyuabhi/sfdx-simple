@@ -1,7 +1,8 @@
 #!groovy
 import groovy.json.JsonSlurperClassic
 node {
-
+    
+    //update run artifact, sfdcusername etc that is hardcoded for now as part of jnj demo
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
     def SFDC_USERNAME="test-emoazgqlq2wi@example.com"
