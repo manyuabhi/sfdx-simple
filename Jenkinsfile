@@ -21,7 +21,7 @@ node {
    
      stage('Create Scratch Org') {
 
-            rc = bat (returnStatus: true, script: 'sfdx force:auth:jwt:grant --clientid 3MVG9YDQS5WtC11oFIMX1lJLuBxuBK.li4OED4JOyldL5T8M8zx8bayYiM8G2kUnVXj6Q39r4zZB1O9NNJlCn --username 18.abhimanyu@gmail.com --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org')
+	     rc = bat (returnStatus: true, script: 'sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org')
             println(rc)
 	    if (rc != 0) { error 'hub org authorization failed' }
 	   // rmsg = bat (returnStdout: true, script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
