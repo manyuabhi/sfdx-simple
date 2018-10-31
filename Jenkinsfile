@@ -23,23 +23,23 @@ node {
 	    rc = bat (returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org")
             println(rc)
 	    if (rc != 0) { error 'hub org authorization failed' }
-	   rmsg = bat (script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
-	   println (rmsg)
-	   def jsonSlurper = new JsonSlurperClassic()
-           def robj = jsonSlurper.parseText(rmsg)
-           if (robj.status != 0) { error 'org creation failed: ' + robj.message }
-           SFDC_USERNAME=robj.result.username
-	   println (SFDC_USERNAME)
-           robj = null
+	   //rmsg = bat (returnStdout: true, script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
+	   //println (rmsg)
+	   //def jsonSlurper = new JsonSlurperClassic()
+           //def robj = jsonSlurper.parseText(rmsg)
+           //if (robj.status != 0) { error 'org creation failed: ' + robj.message }
+           //SFDC_USERNAME=robj.result.username
+	   //println (SFDC_USERNAME)
+           //robj = null
         }
 	
 	stage('Push To Test Org') {
-            rc = bat (returnStatus: true, script: 'sfdx force:source:push --targetusername test-emoazgqlq2wi@example.com')
+		rc = bat (returnStatus: true, script: "sfdx force:source:push --targetusername ${SFDC_USERNAME}")
             if (rc != 0) {
                 error 'push failed'
             }
             // assign permset
-            rc = bat (returnStatus: true, script: 'sfdx force:user:permset:assign --targetusername test-emoazgqlq2wi@example.com --permsetname DreamHouse')
+		rc = bat (returnStatus: true, script: "sfdx force:user:permset:assign --targetusername ${SFDC_USERNAME} --permsetname DreamHouse')
             if (rc != 0) {
                 error 'permset:assign failed'
             }
@@ -47,7 +47,7 @@ node {
 	
 	      stage('Run Apex Test') {
                 timeout(time: 120, unit: 'SECONDS') {
-                rc = bat (returnStatus: true, script: 'sfdx force:apex:test:run --testlevel RunLocalTests --outputdir tests --resultformat tap --targetusername test-emoazgqlq2wi@example.com')
+                rc = bat (returnStatus: true, script: "sfdx force:apex:test:run --testlevel RunLocalTests --outputdir tests --resultformat tap --targetusername ${SFDC_USERNAME}")
                 if (rc != 0) {
                     error 'apex test run failed'
                 }
