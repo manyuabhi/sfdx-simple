@@ -18,10 +18,9 @@ node {
         checkout scm
     }
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
      stage('Create Scratch Org') {
 
-	    rc = bat (returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername -a my-devhub-org")
+	    rc = bat (returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org")
             println(rc)
 	    if (rc != 0) { error 'hub org authorization failed' }
 	   // rmsg = bat (returnStdout: true, script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
@@ -59,4 +58,3 @@ node {
         }
         
     }
-}
