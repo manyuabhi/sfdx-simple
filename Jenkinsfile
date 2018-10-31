@@ -46,8 +46,7 @@ node {
         }
 	
 	      stage('Run Apex Test') {
-		bat "cd tests"      
-		bat "mkdir ${BUILD_NUMBER}"     
+		bat "cd tests && mkdir ${BUILD_NUMBER}"     
                 timeout(time: 120, unit: 'SECONDS') {
                 rc = bat (returnStatus: true, script: "sfdx force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}")
                 if (rc != 0) {
