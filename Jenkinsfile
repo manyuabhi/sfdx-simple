@@ -23,13 +23,14 @@ node {
 	    rc = bat (returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile server.key --setdefaultdevhubusername -a my-devhub-org")
             println(rc)
 	    if (rc != 0) { error 'hub org authorization failed' }
-	   // rmsg = bat (returnStdout: true, script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
-	   // println (rmsg)
-	   // def jsonSlurper = new JsonSlurperClassic()
-           // def robj = jsonSlurper.parseText(rmsg)
-           // if (robj.status != 0) { error 'org creation failed: ' + robj.message }
-           // SFDC_USERNAME=robj.result.username
-           // robj = null
+	   rmsg = bat (returnStdout: true, script: 'sfdx force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername')
+	   println (rmsg)
+	   def jsonSlurper = new JsonSlurperClassic()
+           def robj = jsonSlurper.parseText(rmsg)
+           if (robj.status != 0) { error 'org creation failed: ' + robj.message }
+           SFDC_USERNAME=robj.result.username
+	   println (SFDC_USERNAME)
+           robj = null
         }
 	
 	stage('Push To Test Org') {
